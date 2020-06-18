@@ -1,0 +1,60 @@
+#!/bin/bash
+
+SELF_PATH=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P)
+
+TOOL_PATH="${SELF_PATH}/../../Build/deps/Microsoft Visual C++ Toolkit 2003/bin"
+
+NAME=`basename $0`
+#NAME="${NAME#wine-}"
+
+args=()
+for i in "${@}"; do
+	if [[ -f "$i" ]]; then # if is a path to an actual file/directory then convert
+		new_i="`winepath --windows "$i"`"
+		args+=("$new_i")
+	else
+		OIFS="$IFS"
+		IFS=':'
+		read -a new_i <<< "$i"
+		IFS="$OIFS"
+		case ${#new_i[*]} in
+			2) # Split on `:` and fixup right side if its a valid path
+				if [[ -f "$new_i[1]" ]]; then
+					new_i1="`winepath --windows "$new_i[1]"`"
+					args+=("$new_i[0]:$new_i1")
+				else
+					args+=("$i")
+				fi
+				;;
+			*)
+				case "$i" in # Some special casing of commands
+					/FI/*) args+=("/FI`winepath --windows "${i#/FI}"`") ;;
+					/Yc/*) args+=("/Yc`winepath --windows "${i#/Yc}"`") ;;
+					/Yu/*) args+=("/Yu`winepath --windows "${i#/Yu}"`") ;;
+					*) args+=("$i") ;;
+				esac
+				;;
+		esac
+	fi
+done
+
+before=()
+after=()
+case "$NAME" in
+	"link.exe")
+		before+=("/LIBPATH:`winepath --windows "$TOOL_PATH/../lib"`")
+		before+=("/LIBPATH:`winepath --windows "${SELF_PATH}/../../Build/deps/Microsoft SDKs\Windows\v6.0\Lib"`")
+		;;
+	"cl.exe")
+		before+=("/Zm200")
+		after+=("/link")
+		after+=("/LIBPATH:`winepath --windows "$TOOL_PATH/../lib"`")
+		after+=("/LIBPATH:`winepath --windows "${SELF_PATH}/../../Build/deps/Microsoft SDKs\Windows\v6.0\Lib"`")
+		;;
+	*)
+		;;
+esac
+
+[[ -z "$COMPILE_SCRIPT_WINE_DEBUG" ]] || echo wine "$TOOL_PATH/$NAME" "${before[@]}" "${args[@]}" "${after[@]}"
+wine "$TOOL_PATH/$NAME" "${before[@]}" "${args[@]}" "${after[@]}"
+
