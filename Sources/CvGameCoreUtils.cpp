@@ -2,6 +2,8 @@
 #include "CvMapExternal.h"
 #include "CvPlayerAI.h"
 #include "CvTeamAI.h"
+#include "CvGameAI.h"
+#include "CvRandom.h"
 
 //	Moved exp for next level calc into the DLL.  If you need to undefine this
 //	and go back to using Python you need to make sure that the Python is not

@@ -5,11 +5,15 @@
 
 #include "CvString.h"
 
+#include "sparsehash/sparse_hash_map"
+
 // CvTaggedSaveFormatWrapper.h
 
 
 //	Forward declarations
 class DictionaryEntry;
+class FDataStreamBase;
+typedef unsigned char byte;
 
 //	Class types we know how to remap on load (so that
 //	if new classes of this type are added the load still ties up the old
@@ -161,7 +165,7 @@ public:
 	void		WriteClassArrayOfClassEnum(const char* name, int& idHint, int& idSeq, RemappedClassType indexClassType, RemappedClassType valueClassType, int count, const int values[]);
 
 	//	The following methods are direct replacements for the write calls
-	//	in the underlying FDataStreamBase 
+	//	in the underlying FDataStreamBase
 	void		Write(const char* name, int& idHint, int& idSeq, char value);
 	void		Write(const char* name, int& idHint, int& idSeq, byte value);
 	void		Write(const char* name, int& idHint, int& idSeq, int count, const  char values[]);
@@ -190,14 +194,14 @@ public:
 
 	void		Write(const char* name, int& idHint, int& idSeq, double value);
 	void		Write(const char* name, int& idHint, int& idSeq, int count, const double values[]);
-	
+
 	void		WriteString(const char* name, int& idHint, int& idSeq, const wchar *szName);
 	void		WriteString(const char* name, int& idHint, int& idSeq, const char *szName);
 	void		WriteString(const char* name, int& idHint, int& idSeq, const std::string& szName);
 	void		WriteString(const char* name, int& idHint, int& idSeq, const std::wstring& szName);
 	void		WriteString(const char* name, int& idHint, int& idSeq, int count, std::string values[]);
 	void		WriteString(const char* name, int& idHint, int& idSeq, int count, std::wstring values[]);
-	
+
 	void		ReadStartObject(const char* name, int& idHint, int& idSeq);
 	void		ReadEndObject();
 
@@ -214,14 +218,14 @@ public:
 	void		ReadClassArrayOfClassEnum(const char* name, int& idHint, int& idSeq, RemappedClassType indexClassType, RemappedClassType valueClassType, int count, int values[]);
 
 	//	The following methods are direct replacements for the read calls
-	//	in the underlying FDataStreamBase 
+	//	in the underlying FDataStreamBase
 	void		ReadString(const char* name, int& idHint, int& idSeq, char **szName);
 	void		ReadString(const char* name, int& idHint, int& idSeq, wchar **szName);
 	void		ReadString(const char* name, int& idHint, int& idSeq, std::string& szName);
 	void		ReadString(const char* name, int& idHint, int& idSeq, std::wstring& szName);
 	void		ReadString(const char* name, int& idHint, int& idSeq, int count, std::string values[]);
 	void		ReadString(const char* name, int& idHint, int& idSeq, int count, std::wstring values[]);
-	
+
 	void		Read(const char* name, int& idHint, int& idSeq, char *);
 	void		Read(const char* name, int& idHint, int& idSeq, byte *);
 	void		Read(const char* name, int& idHint, int& idSeq, int count, char values[]);

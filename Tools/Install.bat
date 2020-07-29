@@ -111,7 +111,7 @@ if not exist "%MODS_DIR%" (
 
 if not exist "%MODS_DIR%\..\Civ4BeyondSword.exe" (
     del mods_directory.txt
-    call :wrong_mods_dir "!MODS_DIR!"
+    call :wrong_mods_dir "%MODS_DIR%"
     exit /B 1
 )
 

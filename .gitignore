@@ -8,6 +8,7 @@
 *.dll
 *.pdb
 *.FPK
+*.ilk
 
 /Tools/Autocorrect/LanguageTool.zip
 /Tools/Autocorrect/LanguageTool-*
@@ -58,3 +59,8 @@ Sources/C2C.args.json
 Sources/profile.json
 
 *.bak
+
+.idea/
+*.swp
+mods_directory.txt
+

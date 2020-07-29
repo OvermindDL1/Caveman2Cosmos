@@ -9,6 +9,7 @@ Created:	2009-01-21
 **********************************************************************/
 
 #include "CvGameCoreDLL.h"
+#include "FVariableSystem.h"
 
 bool g_bIsBug = false;
 

@@ -2,6 +2,7 @@
 
 #include "CvGameCoreDLL.h"
 #include "CvPlayerAI.h"
+#include "CvGameAI.h"
 
 CvContractBroker::CvContractBroker() : m_eOwner(NO_PLAYER)
 {

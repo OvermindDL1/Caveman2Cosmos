@@ -2,6 +2,7 @@
 #include "CvGameTextMgr.h"
 #include "CvPlayerAI.h"
 #include "CvTeamAI.h"
+#include "CvGame.h"
 
 void CvGame::updateColoredPlots()
 {

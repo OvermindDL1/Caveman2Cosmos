@@ -6,7 +6,7 @@
 #define CIV4_GAMECORE_UTILS_H
 
 
-#include "CvGlobals.h"
+//#include "CvGlobals.h"
 #include "CvMap.h"
 
 
@@ -216,7 +216,7 @@ CvPlot* plotCity(int iX, int iY, int iIndex);																			// Exposed to Py
 int plotCityXY(int iDX, int iDY);																									// Exposed to Python
 int plotCityXY(const CvCity* pCity, const CvPlot* pPlot);													// Exposed to Python
 
-CardinalDirectionTypes getOppositeCardinalDirection(CardinalDirectionTypes eDir);	// Exposed to Python 
+CardinalDirectionTypes getOppositeCardinalDirection(CardinalDirectionTypes eDir);	// Exposed to Python
 DirectionTypes cardinalDirectionToDirection(CardinalDirectionTypes eCard);				// Exposed to Python
 DllExport bool isCardinalDirection(DirectionTypes eDirection);															// Exposed to Python
 DirectionTypes estimateDirection(int iDX, int iDY);																// Exposed to Python
@@ -429,7 +429,7 @@ DirectionTypes getOppositeDirection(DirectionTypes eDirection);
 bool isAdjacentDirection(DirectionTypes eFacingDirection, DirectionTypes eOtherDirection);
 /************************************************************************************************/
 /* Afforess	                         END                                                        */
-/************************************************************************************************/	
+/************************************************************************************************/
 
 //	Koshling - abstract treaty length from the define int to allow scaling
 int getTreatyLength();
@@ -452,6 +452,6 @@ protected:
 	WORD c1;
 	WORD c2;
 	DWORD sum;
-}; 
+};
 
 #endif

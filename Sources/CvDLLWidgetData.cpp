@@ -3,6 +3,7 @@
 #include "CvDLLWidgetData.h"
 #include "CvPlayerAI.h"
 #include "CvTeamAI.h"
+#include "CvGameAI.h"
 
 CvDLLWidgetData* CvDLLWidgetData::m_pInst = NULL;
 

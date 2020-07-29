@@ -191,12 +191,12 @@ Unity( 'Sources-Unity' )
     .UnityInputPath = '$SOURCE_DIR$'
     .UnityInputExcludePattern = '*/Cy*'
     // Keep our pch file out of the unity files
-    .UnityInputExcludedFiles = { "CvGameCoreDLL.cpp" }
-    .UnityInputIsolatedFiles = { "CvGameTextMgr.cpp" }
+    //.UnityInputExcludedFiles = { "CvGameCoreDLL.cpp" }
+    //.UnityInputIsolatedFiles = { "CvGameTextMgr.cpp" }
     .UnityOutputPath        = '$BUILD_DIR$\unity'
     .UnityInputPathRecurse  = false
     .UnityNumFiles          = 12
-    .UnityPCH               = 'CvGameCoreDLL.h'
+    //.UnityPCH               = 'CvGameCoreDLL.h'
 }
 
 ForEach( .Config in .Configs )
@@ -212,26 +212,26 @@ ForEach( .Config in .Configs )
     {
         .CompilerInputPath = '$SOURCE_DIR$'
         .CompilerInputPathRecurse = false
-        .CompilerInputPattern = 'Cy*.cpp'
+        //.CompilerInputPattern = 'Cy*.cpp'
         
-        .CompilerInputUnity = 'Sources-Unity'
+        //.CompilerInputUnity = 'Sources-Unity'
 
         .CompilerOutputPath = '$OUT_DIR$'
 
-        .PCHInputFile       = '$SOURCE_DIR$/CvGameCoreDLL.cpp'
-        .PCHOutputFile      = '$OUT_DIR$/CvGameCoreDLL.pch'
-        .PCHOptions         = ' "%1"' // PCH .CPP Input
-                            + ' /Fo"%3"' // .OBJ Output
-                            + ' /Yc"CvGameCoreDLL.h"' // PCH Header
-                            + ' /Fp"%2"' // .PCH File
-                            + ' $CLOptions$'
-                            + ' /DBUILD_TARGET=$ConfigName$'
-                            + ' /c'
+        //.PCHInputFile       = '$SOURCE_DIR$/CvGameCoreDLL.cpp'
+        //.PCHOutputFile      = '$OUT_DIR$/CvGameCoreDLL.pch'
+        //.PCHOptions         = ' "%1"' // PCH .CPP Input
+        //                    + ' /Fo"%3"' // .OBJ Output
+        //                    + ' /Yc"CvGameCoreDLL.h"' // PCH Header
+        //                    + ' /Fp"%2"' // .PCH File
+        //                    + ' $CLOptions$'
+        //                    + ' /DBUILD_TARGET=$ConfigName$'
+        //                    + ' /c'
 
         .CompilerOptions    = ' "%1"' // .CPP Input
                             + ' /Fo"%2"' // .OBJ Output
-                            + ' /Yu"CvGameCoreDLL.h"' // PCH Header
-                            + ' /Fp"$PCHOutputFile$"' // .PCH File
+                            //+ ' /Yu"CvGameCoreDLL.h"' // PCH Header
+                            //+ ' /Fp"$PCHOutputFile$"' // .PCH File
                             + ' $CLOptions$'
                             + ' /DBUILD_TARGET=$ConfigName$'
                             + ' /c'

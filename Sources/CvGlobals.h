@@ -150,7 +150,11 @@ class CvMapSwitchInfo;
 /*******************************/
 
 #include "CvInfoReplacements.h"
+#include "CvString.h"
+#include "CvEnums.h"
+#include "NiPoint.h"
 #include "GlobalDefines.h"
+#include "CvGameCoreDLL.h"
 #include <stack>
 
 extern CvDLLUtilityIFaceBase* g_DLL;
@@ -185,7 +189,7 @@ public:
 	CvStatsReporter* getStatsReporterPtr() const 		{ return m_statsReporter; }
 	CvInterface& getInterface() const 					{ return *m_interface; }
 	CvInterface* getInterfacePtr() const 				{ return m_interface; }
-	
+
 
 /*********************************/
 /***** Parallel Maps - Begin *****/

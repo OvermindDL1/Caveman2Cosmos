@@ -15,7 +15,11 @@ class BoolExpr;
 class cvInternalGlobals;
 class CvInfoBase;
 
+#include "CvString.h"
+
 #include <set>
+
+typedef unsigned int uint;
 
 template <class T>
 class CvInfoReplacement
@@ -134,7 +138,7 @@ public:
 		}
 		return NULL;
 	}
-	
+
 	// This adds a replacement or updates an existing one
 	void addReplacement(uint uiID, uint uiReplID, BoolExpr* pCondition, T* pInfo, bool bPassTwo = false)
 	{
@@ -179,7 +183,7 @@ public:
 
 		// Switch in all replacements for which the condition is true, but only the first right one if there is more than one
 		std::set<int> setSwitched;
-		
+
 		iSize = m_apReplacements.size();
 		for (unsigned int i=0; i<iSize; i++)
 		{

@@ -9,6 +9,8 @@
 #include "CvPlayerAI.h"
 #include "CvTeamAI.h"
 
+#include <MMSystem.h>
+
 //	Koshling - save game compatibility between (most) builds
 //	UI flag values in game serialization.  These are bitwise combinable
 #define	GAME_SAVE_UI_FLAG_VALUE_AND_BASE		0x00000001

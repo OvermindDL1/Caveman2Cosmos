@@ -8,6 +8,7 @@
 //------------------------------------------------------------------------------------------------
 #include "CvGameCoreDLL.h"
 #include "CvPlayerAI.h"
+#include "CvGameAI.h"
 
 void BuildingFilterBase::Activate()
 {

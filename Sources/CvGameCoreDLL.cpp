@@ -1,6 +1,7 @@
 #include "CvGameCoreDLL.h"
 
 #include <psapi.h>
+#include "MMSystem.h"
 
 static CRITICAL_SECTION g_cPythonSection;
 #ifdef USE_INTERNAL_PROFILER
@@ -35,8 +36,8 @@ bool runProcess(const std::string& exe, const std::string& workingDir)
 
 // BUG - EXE/DLL Paths - end
 
-BOOL APIENTRY DllMain(HANDLE hModule, 
-					  DWORD  ul_reason_for_call, 
+BOOL APIENTRY DllMain(HANDLE hModule,
+					  DWORD  ul_reason_for_call,
 					  LPVOID lpReserved)
 {
 	switch( ul_reason_for_call ) {
@@ -44,7 +45,7 @@ BOOL APIENTRY DllMain(HANDLE hModule,
 		{
 		dllModule = hModule;
 
-		// The DLL is being loaded into the virtual address space of the current process as a result of the process starting up 
+		// The DLL is being loaded into the virtual address space of the current process as a result of the process starting up
 		OutputDebugString("[C2C] DLL_PROCESS_ATTACH\n");
 
 		InitializeCriticalSection(&g_cPythonSection);
@@ -159,7 +160,7 @@ void IFPProfileThread()
 	if ( iThreadSlot == -1 && (g_bTraceBackgroundThreads || bIsMainThread) )
 	{
 		EnterCriticalSection(&cSampleSection);
-		
+
 		for(int iI = 0; iI < MAX_PROFILED_THREADS; iI++)
 		{
 			if ( !bThreadSlotOccupied[iI] )
@@ -182,7 +183,7 @@ void IFPBeginSample(ProfileLinkageInfo* linkageInfo, bool bAsConditional)
 	{
 		bMainThreadSeen = true;
 		bIsMainThread = true;
-		
+
 		for(int iI = 0; iI < MAX_PROFILED_THREADS; iI++)
 		{
 			bThreadSlotOccupied[iI] = false;
@@ -324,7 +325,7 @@ void IFPEndSample(ProfileLinkageInfo* linkageInfo, bool bAsConditional)
 				MessageBox(NULL,"Too many end-samples","CvGameCore",MB_OK);
 			}
 		}
-		else 
+		else
 	#endif
 		{
 			if ( !bAsConditional )
@@ -392,7 +393,7 @@ void IFPEndSample(ProfileLinkageInfo* linkageInfo, bool bAsConditional)
 				else
 				{
 					EnterCriticalSection(&cSampleSection);
-					
+
 					for(int iI = 0; iI < numSamples; iI++)
 					{
 						ProfileSample* thisSample = sampleList[iI];

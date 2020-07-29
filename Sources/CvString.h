@@ -6,6 +6,17 @@
 #include <string>
 #pragma warning( disable: 4251 )		// needs to have dll-interface to be used by clients of class
 
+//#include "CvGameCoreDLL.h" // For the `wchar` type...
+typedef wchar_t wchar;
+#include "nullptr_t.h"
+#include <vector>
+#include <stdarg.h>
+
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
+
+#define SAFE_DELETE_ARRAY(p) { if(p) { delete[] (p);   (p)=NULL; } }
+
 //
 // simple string classes, based on stl, but with a few helpers
 //

@@ -1,5 +1,8 @@
 #include "CvGameCoreDLL.h"
-
+#include "CvPlayerAI.h"
+#include "CvTeamAI.h"
+#include "CvGameAI.h"
+#include "CvInitCore.h"
 #include <boost155/functional.hpp>
 #include <boost155/bind.hpp>
 
