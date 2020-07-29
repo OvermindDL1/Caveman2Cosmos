@@ -19,9 +19,6 @@ import ScreenInput as PyScreenInput
 import BugCore
 AdvisorOpt = BugCore.game.Advisors
 
-import C2CMainOptions
-import C2CNationAdvisor
-
 g_iScreenActive = -2
 
 def toggleSetNoScreens():
@@ -51,15 +48,6 @@ def toggleSetScreenOn(argsList):
 
 #diplomacyScreen = CvDiplomacy.CvDiplomacy()
 
-c2cMainOptionsScreen = C2CMainOptions.C2CMainOptions()
-def showC2CMainOptionsScreen():
-	c2cMainOptionsScreen.interfaceScreen()
-
-c2cNationAdvisorScreen = C2CNationAdvisor.C2CNationAdvisor()
-def showC2CNationAdvisorScreen():
-	c2cNationAdvisorScreen.interfaceScreen()
-
-
 mainInterface = CvMainInterface.CvMainInterface()
 def showMainInterface():
 	print "showMainInterface"
@@ -71,7 +59,7 @@ def reinitMainInterface():
 	mainInterface = CvMainInterface.CvMainInterface()
 	mainInterface.interfaceScreen()
 
-def numPlotListButtons(): return 0 # Called from exe.
+def numPlotListButtons(): return 0 # Called from exe
 
 def showTechChooser():
 	if CyGame().getActivePlayer() != -1:
@@ -673,11 +661,8 @@ screenMap = {
 	MAIN_INTERFACE			: mainInterface,
 	OPTIONS_SCREEN			: optionsScreen,
 	REPLAY_SCREEN			: replayScreen,
-	# add new screens here
 	STRATEGY_OVERLAY_SCREEN		: overlayScreen,
-	REVOLUTION_WATCH_ADVISOR	: revolutionWatchAdvisor,
-	C2C_INITIAL_OPTIONS_SCREEN	: c2cMainOptionsScreen,
-	C2C_NATIONAL_ADVISOR_SCREEN	: c2cNationAdvisorScreen
+	REVOLUTION_WATCH_ADVISOR	: revolutionWatchAdvisor
 }
 ##############
 # Initialize #
@@ -718,10 +703,10 @@ def lateInit():
 	screenMap[TECH_CHOOSER]			= CvTechChooser.CvTechChooser()
 	screenMap[BUILD_LIST_SCREEN]	= BuildListScreen.BuildListScreen()
 
-	import CvWorldBuilderScreen, CvAdvancedStartScreen
+	import WorldBuilder, CvAdvancedStartScreen
 	global worldBuilderScreen, advancedStartScreen
 	advancedStartScreen = CvAdvancedStartScreen.CvAdvancedStartScreen()
-	worldBuilderScreen = CvWorldBuilderScreen.CvWorldBuilderScreen(WORLDBUILDER_SCREEN)
+	worldBuilderScreen = WorldBuilder.WorldBuilder(WORLDBUILDER_SCREEN)
 	screenMap[WORLDBUILDER_SCREEN] = worldBuilderScreen
 	import WBPlotScreen
 	import WBEventScreen
@@ -734,29 +719,27 @@ def lateInit():
 	import WBUnitScreen
 	import WBPromotionScreen
 	import WBDiplomacyScreen
-	import WBGameDataScreen
 	import WBPlayerUnits
 	import WBReligionScreen
 	import WBCorporationScreen
 	import WBInfoScreen
 	import WBTradeScreen
-	screenMap[WB_PLOT]			= WBPlotScreen.WBPlotScreen()
-	screenMap[WB_EVENT]			= WBEventScreen.WBEventScreen()
-	screenMap[WB_BUILDING]		= WBBuildingScreen.WBBuildingScreen()
-	screenMap[WB_CITYDATA]		= WBCityDataScreen.WBCityDataScreen()
+	screenMap[WB_PLOT]			= WBPlotScreen.WBPlotScreen(worldBuilderScreen)
+	screenMap[WB_EVENT]			= WBEventScreen.WBEventScreen(worldBuilderScreen)
+	screenMap[WB_BUILDING]		= WBBuildingScreen.WBBuildingScreen(worldBuilderScreen)
+	screenMap[WB_CITYDATA]		= WBCityDataScreen.WBCityDataScreen(worldBuilderScreen)
 	screenMap[WB_CITYEDIT]		= WBCityEditScreen.WBCityEditScreen(worldBuilderScreen)
-	screenMap[WB_PROJECT]		= WBProjectScreen.WBProjectScreen()
-	screenMap[WB_TEAM]			= WBTeamScreen.WBTeamScreen()
-	screenMap[WB_PLAYER]		= WBPlayerScreen.WBPlayerScreen()
+	screenMap[WB_PROJECT]		= WBProjectScreen.WBProjectScreen(worldBuilderScreen)
+	screenMap[WB_TEAM]			= WBTeamScreen.WBTeamScreen(worldBuilderScreen)
+	screenMap[WB_PLAYER]		= WBPlayerScreen.WBPlayerScreen(worldBuilderScreen)
 	screenMap[WB_UNIT]			= WBUnitScreen.WBUnitScreen(worldBuilderScreen)
-	screenMap[WB_PROMOTION]		= WBPromotionScreen.WBPromotionScreen()
-	screenMap[WB_DIPLOMACY]		= WBDiplomacyScreen.WBDiplomacyScreen()
-	screenMap[WB_GAMEDATA]		= WBGameDataScreen.WBGameDataScreen(worldBuilderScreen)
-	screenMap[WB_UNITLIST]		= WBPlayerUnits.WBPlayerUnits()
-	screenMap[WB_RELIGION]		= WBReligionScreen.WBReligionScreen()
-	screenMap[WB_CORPORATION]	= WBCorporationScreen.WBCorporationScreen()
-	screenMap[WB_INFO]			= WBInfoScreen.WBInfoScreen()
-	screenMap[WB_TRADE]			= WBTradeScreen.WBTradeScreen()
+	screenMap[WB_PROMOTION]		= WBPromotionScreen.WBPromotionScreen(worldBuilderScreen)
+	screenMap[WB_DIPLOMACY]		= WBDiplomacyScreen.WBDiplomacyScreen(worldBuilderScreen)
+	screenMap[WB_UNITLIST]		= WBPlayerUnits.WBPlayerUnits(worldBuilderScreen)
+	screenMap[WB_RELIGION]		= WBReligionScreen.WBReligionScreen(worldBuilderScreen)
+	screenMap[WB_CORPORATION]	= WBCorporationScreen.WBCorporationScreen(worldBuilderScreen)
+	screenMap[WB_INFO]			= WBInfoScreen.WBInfoScreen(worldBuilderScreen)
+	screenMap[WB_TRADE]			= WBTradeScreen.WBTradeScreen(worldBuilderScreen)
 
 
 

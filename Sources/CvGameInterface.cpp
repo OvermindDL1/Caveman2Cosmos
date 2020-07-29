@@ -254,7 +254,7 @@ void CvGame::updateColoredPlots()
 
 									if (eBestBuild != NO_BUILD)
 									{
-										CvBuildInfo& kBestBuild = GC.getBuildInfo(eBestBuild);
+										const CvBuildInfo& kBestBuild = GC.getBuildInfo(eBestBuild);
 										eBestImprovement = (ImprovementTypes)kBestBuild.getImprovement();
 										eBestRoute = (RouteTypes)kBestBuild.getRoute();
 
@@ -285,7 +285,7 @@ void CvGame::updateColoredPlots()
 										{
 											if (eBestBuild != NO_BUILD)
 											{
-												CvImprovementInfo& kPlotImprovement = GC.getImprovementInfo(ePlotImprovement);
+												const CvImprovementInfo& kPlotImprovement = GC.getImprovementInfo(ePlotImprovement);
 
 												if (eBestRoute != NO_ROUTE)
 												{
@@ -597,12 +597,11 @@ void CvGame::updateColoredPlots()
 
 			for (int iPlayer = 0; iPlayer < MAX_PC_PLAYERS; ++iPlayer)
 			{
-				CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iPlayer);
+				const CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iPlayer);
 
 				if (kPlayer.getTeam() == getActiveTeam())
 				{
-					int iLoop;
-					for (CvUnit* pLoopUnit = kPlayer.firstUnit(&iLoop); NULL != pLoopUnit; pLoopUnit = kPlayer.nextUnit(&iLoop))
+					foreach_(const CvUnit* pLoopUnit, kPlayer.units())
 					{
 						if (pLoopUnit->isBlockading())
 						{
@@ -610,7 +609,7 @@ void CvGame::updateColoredPlots()
 							{
 								for (int j = -iBlockadeRange; j <= iBlockadeRange; ++j)
 								{
-									CvPlot* pLoopPlot = ::plotXY(pLoopUnit->getX(), pLoopUnit->getY(), i, j);
+									const CvPlot* pLoopPlot = ::plotXY(pLoopUnit->getX(), pLoopUnit->getY(), i, j);
 									if (NULL != pLoopPlot && pLoopPlot->isRevealed(getActiveTeam(), false))
 									{
 										if (GC.getMap().calculatePathDistance(pLoopUnit->plot(),pLoopPlot) > iBlockadeRange)
@@ -1140,16 +1139,14 @@ bool CvGame::selectCity(CvCity* pSelectCity, bool bCtrl, bool bAlt, bool bShift)
 
 	if (bAlt)
 	{
-		int iLoop;
-		for (CvCity* pLoopCity = GET_PLAYER(pSelectCity->getOwner()).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER(pSelectCity->getOwner()).nextCity(&iLoop))
+		foreach_(CvCity* pLoopCity, GET_PLAYER(pSelectCity->getOwner()).cities())
 		{
 			gDLL->getInterfaceIFace()->addSelectedCity(pLoopCity);
 		}
 	}
 	else if (bCtrl)
 	{
-		int iLoop;
-		for (CvCity* pLoopCity = GET_PLAYER(pSelectCity->getOwner()).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER(pSelectCity->getOwner()).nextCity(&iLoop))
+		foreach_(CvCity* pLoopCity, GET_PLAYER(pSelectCity->getOwner()).cities())
 		{
 			if (pLoopCity->getArea() == pSelectCity->getArea())
 			{
@@ -1292,13 +1289,11 @@ void CvGame::selectionListGameNetMessageInternal(int eMessage, int iData2, int i
 // BUG - All Units Actions - start
 				if ((iData2 == COMMAND_DELETE) && bAlt)
 				{
-					CvPlayerAI& kPlayer = GET_PLAYER(pHeadSelectedUnit->getOwner());
-					int iLoop;
 					pSelectedUnitNode = gDLL->getInterfaceIFace()->headSelectionListNode();
 					pSelectedUnit = ::getUnit(pSelectedUnitNode->m_data);
-					UnitTypes kType = pSelectedUnit->getUnitType();
+					const UnitTypes kType = pSelectedUnit->getUnitType();
 
-					for (CvUnit* pLoopUnit = kPlayer.firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = kPlayer.nextUnit(&iLoop))
+					foreach_(const CvUnit* pLoopUnit, GET_PLAYER(pHeadSelectedUnit->getOwner()).units())
 					{
 						if (pLoopUnit->getUnitType() == kType)
 						{
@@ -2770,8 +2765,8 @@ void CvGame::cheatSpaceship() const
 	CvTeam& kTeam = GET_TEAM(getActiveTeam());
 	for (int i = 0; i < GC.getNumProjectInfos(); i++)
 	{
-		ProjectTypes eProject = (ProjectTypes) i;
-		CvProjectInfo& kProject = GC.getProjectInfo(eProject);
+		const ProjectTypes eProject = (ProjectTypes) i;
+		const CvProjectInfo& kProject = GC.getProjectInfo(eProject);
 		if (kProject.isSpaceship())
 		{
 			//cheat required projects
@@ -2921,8 +2916,8 @@ void CvGame::nextActivePlayer(bool bForward)
 
 int CvGame::getNextSoundtrack(EraTypes eLastEra, int iLastSoundtrack) const
 {
-	EraTypes eCurEra = GET_PLAYER(getActivePlayer()).getCurrentEra();
-	CvEraInfo& kCurrentEra = GC.getEraInfo(eCurEra);
+	const EraTypes eCurEra = GET_PLAYER(getActivePlayer()).getCurrentEra();
+	const CvEraInfo& kCurrentEra = GC.getEraInfo(eCurEra);
 	if (kCurrentEra.getNumSoundtracks() == 0)
 	{
 		return -1;
@@ -2967,8 +2962,7 @@ void CvGame::initSelection() const
 	bool bSelected = false;
 	CvUnit* pSelectionUnit = NULL;
 
-	int iLoop;
-	for (CvUnit* pLoopUnit = GET_PLAYER(getActivePlayer()).firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = GET_PLAYER(getActivePlayer()).nextUnit(&iLoop))
+	foreach_(CvUnit* pLoopUnit, GET_PLAYER(getActivePlayer()).units())
 	{
 		if (pLoopUnit->getGroup()->readyToSelect())
 		{
@@ -2984,7 +2978,7 @@ void CvGame::initSelection() const
 
 	if (!bSelected)
 	{
-		for (CvUnit* pLoopUnit = GET_PLAYER(getActivePlayer()).firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = GET_PLAYER(getActivePlayer()).nextUnit(&iLoop))
+		foreach_(CvUnit* pLoopUnit, GET_PLAYER(getActivePlayer()).units())
 		{
 			if (pLoopUnit->getGroup()->readyToSelect())
 			{
@@ -2999,6 +2993,7 @@ void CvGame::initSelection() const
 	if (!bSelected)
 	{
 		// Last resort
+		int iLoop;
 		pSelectionUnit = GET_PLAYER(getActivePlayer()).firstUnit(&iLoop);
 	}
 
